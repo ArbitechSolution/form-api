@@ -1,58 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { useState } from 'react';
 import "./Style.css";
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import toast, { Toaster } from 'react-hot-toast';
 
-function SignUp() {
-    // const [load , setLoad]=useState()
+function DeleteKey() {
     const [post,setPost]=useState()
-    const [value, setValue] = useState("")
-    console.log("value", value);
-async function createAccount() {
-    try{
-        setPost(true);
-        let payload = { limit:value};
-        // if(payload <= 10){
-                let res = await axios.post('https://create-bsc-wallet.herokuapp.com/api/wallet/create', payload);
-                console.log("res", res);
-                let data = res.data;
-                console.log(data.message);
-                setValue("")
-                toast.success('Successfully Wallet Created!')
-                setPost(false);
-            
-        // }
-    }catch(error){
-        console.log("error", error);
+    async function DeleteAllKey() {
+        try{
+            setPost(true)
+            console.log(setPost);
+        let res = await axios.delete('https://create-bsc-wallet.herokuapp.com/api/wallet/');
+        console.log(res.status);
+        setPost(false)
+        toast.success('Successfully Deleted All Accounts!')
+        
+        }
+        catch(error){
+console.log("error", error);
+        }
     }
-   
-   
-}
-
-
+    
   return (
     <>
-      <div className="contact1">
+        <div className="contact1">
                 <div className="container-contact1" >
                     <div className="contact1-pic js-tilt" data-tilt>
-                        <img src="/Images/CreateAccount.png" alt="IMG" />
+                        <img src="/Images/Delete.png" alt="IMG" />
                     </div>
                     <div>
                         <span className="contact1-form-title">
-                            Create Accounts
+                            Delete All Accounts
                         </span>
-                        <div className="wrap-input1 validate-input" >
+                        {/* <div className="wrap-input1 validate-input" >
                             <input className="input1" type="number" value={value} onChange={(e)=>setValue(e.target.value)} placeholder="No Of Accounts" min={1} required />
                             <span className="shadow-input1" />
-                        </div>
+                        </div> */}
                         <div className="container-contact1-form-btn">
                         {
                             !post && (
-                                <button className="contact1-form-btn" onClick={createAccount}>
+                                <button className="contact1-form-btn" onClick={DeleteAllKey}>
                                 <span>
-                                Create Account
-                                    <i className="fa-solid fa-plus" aria-hidden="true" />
+                                Delete Accounts
+                                    <i className="fa-solid fa-trash" aria-hidden="true" />
                                 </span>
                             </button>
 
@@ -60,7 +51,7 @@ async function createAccount() {
                         }
                         {
                             post &&
-                            (<button className="contact1-form-btn" onClick={createAccount}>
+                            (<button className="contact1-form-btn" onClick={DeleteAllKey}>
                                 <span>
                                 <ClipLoader  size={15} color={"while"}/>
                                 
@@ -93,4 +84,4 @@ async function createAccount() {
   )
 }
 
-export default SignUp
+export default DeleteKey
